@@ -1,41 +1,249 @@
-.inmueble-item {
-  border: 2px solid #ddd;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+/* css/estilos.css */
+
+/* Importar fuente profesional */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #EAEAEA;
+  color: #222;
 }
 
-.inmueble-item strong {
-  font-size: 18px;
-  color: #333;
+/* Header y footer con diseño más elegante */
+header, footer {
+  background: linear-gradient(135deg, #003366, #005fa3);
+  color: white;
+  padding: 1.5em;
+  text-align: center;
+  font-weight: 700;
 }
 
-.inmueble-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin: 10px 0;
+/* Contenedor principal */
+main {
+  padding: 2em;
 }
 
+/* Formularios con diseño moderno */
+form {
+  background: white;
+  padding: 2em;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+input, textarea, button {
+  width: 100%;
+  margin: 1em 0;
+  padding: 0.8em;
+  border: 2px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input:focus, textarea:focus {
+  border-color: #0074d9;
+  box-shadow: 0 0 8px rgba(0,116,217,0.3);
+}
+
+/* Botón con efecto profesional */
 button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
+  background: linear-gradient(135deg, #0074d9, #005fa3);
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 5px;
-}
-
-.edit-btn {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.delete-btn {
-  background-color: #E74C3C;
-  color: white;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border: none;
 }
 
 button:hover {
-  opacity: 0.8;
+  background: linear-gradient(135deg, #005fa3, #004080);
+  transform: scale(1.07);
+  box-shadow: 0 5px 15px rgba(0, 116, 217, 0.3);
 }
+
+/* Tarjetas con efecto elegante */
+/* Diseño mejorado de las tarjetas de inmuebles */
+.inmueble-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 350px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.inmueble-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.imagen-galeria {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.imagen-inmueble {
+  height: 120px;
+  border-radius: 5px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.imagen-inmueble:hover {
+  transform: scale(1.05);
+}
+
+.telefono-link {
+  color: #007BFF;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.telefono-link:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor responsivo */
+#inmuebles-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Enlace "Ver más" con animación sutil */
+.ver-mas {
+  display: inline-block;
+  margin-top: 1em;
+  color: #0074d9;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.ver-mas:hover {
+  text-decoration: underline;
+  color: #004080;
+}
+
+/* Galería */
+.galeria-imagenes {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+.galeria-imagenes img {
+  max-height: 150px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.galeria-imagenes img:hover {
+  transform: scale(1.05);
+}
+
+/* Contenedor del visor modal */
+.visor-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Imagen dentro del visor */
+.visor-modal img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Botón de cierre del visor */
+.cerrar-visor {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.cerrar-visor:hover {
+  opacity: 0.7;
+}
+
+/* Botones de navegación (anterior y siguiente imagen) */
+.visor-flecha {
+  position: center; /* Los colocamos en las orillas */
+  top: 50%;  /* Alineamos verticalmente */
+  transform: translateY(-50%);  /* Centrado perfecto en el eje vertical */
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  z-index: 10; /* Asegura que los botones estén sobre la imagen */
+  border-radius: 5px; /* Bordes redondeados para mejor apariencia */
+  outline: none; /* Quitar el borde al hacer clic */
+}
+
+.visor-flecha:hover {
+  background: rgba(0, 0, 0, 0.8); /* Cambiar el fondo al pasar el mouse */
+}
+
+.visor-flecha:active {
+  background: rgba(0, 0, 0, 0.9); /* No cambiará la posición o el tamaño al hacer clic */
+  transform: translateY(-50%); /* Mantener la posición exacta al hacer clic */
+}
+
+/* Botones a la izquierda y derecha */
+#prev-btn {
+  left: 10px; /* Botón izquierdo */
+}
+
+#next-btn {
+  right: 10px; /* Botón derecho */
+}
+
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .visor-modal img {
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .visor-flecha {
+    font-size: 18px;
+    padding: 8px 12px;
+  }
+
+  .cerrar-visor {
+    font-size: 25px;
+    top: 10px;
+    right: 15px;
+  }
+}
+
