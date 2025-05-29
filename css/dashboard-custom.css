@@ -1,0 +1,163 @@
+/* Diseño general del Dashboard */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.dashboard-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos del encabezado */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #0073e6;
+  color: white;
+  border-radius: 8px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+#logout-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilos de los inmuebles */
+.inmueble-item {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inmueble-item strong {
+  font-size: 18px;
+  color: #333;
+}
+
+.inmueble-item img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Botones de acción */
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.edit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #E74C3C;
+  color: white;
+}
+
+/* Estilos del modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Estilos de la previsualización de imágenes */
+.preview-img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Carrusel de imágenes */
+.swiper-container {
+  width: 100%;
+  max-height: 250px;
+}
+
+.swiper-slide img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Estilos para el formulario */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Estilos del botón de guardar cambios */
+button[type="submit"] {
+  background: #0073e6;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}

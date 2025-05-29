@@ -1,0 +1,52 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Panel de Administración</h1>
+    <button id="logout">Cerrar sesión</button>
+  </header>
+
+ <section class="busqueda-filtros">
+    <input type="text" id="buscador" placeholder="Buscar por título...">
+    <select id="filtro-tipo">
+      <option value="">Tipo</option>
+      <option value="Casa">Casa</option>
+      <option value="Departamento">Departamento</option>
+      <option value="Terreno">Terreno</option>
+    </select>
+    <select id="filtro-precio">
+      <option value="">Precio</option>
+      <option value="0-1000000">Menos de $1M</option>
+      <option value="1000000-3000000">$1M - $3M</option>
+      <option value="3000000">Más de $3M</option>
+    </select>
+  </section>
+
+  <main>
+    <section id="listado-inmuebles" class="inmuebles-section">
+      <h2>Propiedades Disponibles</h2>
+      <div id="inmuebles-container" class="inmuebles-grid"></div>
+    </section>
+  </main>
+
+  <footer style="background-color: #2c3e50; color: #ecf0f1; padding: 20px; text-align: center;">
+    <p>&copy; 2025 Hogar24/7 - Tu portal inmobiliario de confianza.</p>
+    <p>Encontrá la propiedad de tus sueños con nosotros.</p>
+    <div style="margin-top: 10px;">
+        <p><strong>Contacto</strong></p>
+        <p>📞 <a href="https://wa.me/7717789580" target="_blank" style="color: #ecf0f1; text-decoration: none;">7717789580</a></p>
+        <p>📧 <a href="mailto:asesor.brandon@gmail.com" style="color: #ecf0f1; text-decoration: none;">asesor.brandon@gmail.com</a></p>
+    </div>
+</footer>
+
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

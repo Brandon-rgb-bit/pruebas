@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio - Inmobiliaria</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <header class="main-header">
+    <h1>Hogar24/7</h1>
+    <nav>
+      <a href="login.html">Iniciar sesión</a>
+      <a href="register.html">Registrarse</a>
+    </nav>
+  </header>
+
+  <section class="busqueda-filtros">
+    <input type="text" id="buscador" placeholder="Buscar por título...">
+
+    <select id="filtro-tipo">
+        <option value="">Tipo de propiedad</option>
+        <option value="">Todos</option>
+        <option value="Casa">Casa</option>
+        <option value="Departamento">Departamento</option>
+        <option value="Terreno">Terreno</option>
+        <option value="Local">Local Comercial</option>
+        <option value="Bodega">Bodega</option>
+        <option value="Oficina">Oficina</option>
+    </select>
+
+    <select id="filtro-precio">
+        <option value="">Precio</option>
+        <option value="0-1000000">Menos de $1M</option>
+        <option value="1000000-3000000">$1M - $3M</option>
+        <option value="3000000">Más de $3M</option>
+    </select>
+
+    <!-- Filtro de Estado -->
+    <select id="filtro-estado">
+        <option value="">Estado</option>
+        <option value="Guanajuato">Guanajuato</option>
+        <option value="Jalisco">Jalisco</option>
+        <option value="Nuevo León">Nuevo León</option>
+        <option value="Guerrero">Guerrero</option>
+        <!-- Agrega todos los estados de México -->
+    </select>
+
+    <!-- Filtro de Municipio -->
+    <select id="filtro-municipio">
+        <option value="">Municipio</option>
+        <!-- Se llenará dinámicamente según el estado seleccionado -->
+    </select>
+
+    <!-- Filtro de Operación -->
+    <select id="filtro-operacion">
+        <option value="">Operación</option>
+        <option value="Venta">Venta</option>
+        <option value="Renta">Renta</option>
+    </select>
+</section>
+
+<script>
+    const municipiosPorEstado = {
+        "Guanajuato": ["Leon", "Celaya", "Irapuato", "Villagrán"],
+        "Jalisco": ["Guadalajara", "Zapopan", "Puerto Vallarta"],
+        "Nuevo León": ["Monterrey", "San Pedro", "Santa Catarina"],
+        "Guerrero": ["Acapulco", "Chilpancingo", "Iguala", "Taxco"]
+        // Agrega todos los estados y municipios aquí
+    };
+
+    const estadoSelect = document.getElementById("filtro-estado");
+    const municipioSelect = document.getElementById("filtro-municipio");
+
+    estadoSelect.addEventListener("change", function () {
+        const estadoSeleccionado = estadoSelect.value;
+        municipioSelect.innerHTML = '<option value="">Municipio</option>';
+
+        if (estadoSeleccionado && municipiosPorEstado[estadoSeleccionado]) {
+            municipiosPorEstado[estadoSeleccionado].forEach(municipio => {
+                const option = document.createElement("option");
+                option.value = municipio;
+                option.textContent = municipio;
+                municipioSelect.appendChild(option);
+            });
+        }
+    });
+</script>
+
+
+  <main>
+    <section id="listado-inmuebles" class="inmuebles-section">
+      <h2>Propiedades Disponibles</h2>
+      <div id="inmuebles-container" class="inmuebles-grid">
+        <p>Cargando propiedades...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background-color: #2c3e50; color: #ecf0f1; padding: 20px; text-align: center;">
+    <p>&copy; 2025 Hogar24/7 - Tu portal inmobiliario de confianza.</p>
+    <p>Encuentra la propiedad de tus sueños con nosotros.</p>
+    <div style="margin-top: 10px;">
+        <p><strong>Contacto</strong></p>
+        <p>📞 <a href="https://wa.me/7717789580" target="_blank" style="color: #ecf0f1; text-decoration: none;">7717789580</a></p>
+        <p>📧 <a href="mailto:asesor.brandon@gmail.com" style="color: #ecf0f1; text-decoration: none;">asesor.brandon@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <!-- Solo usa módulo -->
+  <script type="module">
+    import { supabase } from './js/supabaseClient.js';
+
+   function renderinmuebles(lista) {
+  const contenedor = document.getElementById('inmuebles-container');
+  contenedor.innerHTML = '';
+
+  if (lista.length === 0) {
+    contenedor.innerHTML = '<p>No hay inmuebles disponibles.</p>';
+    return;
+  }
+
+  lista.forEach(inmueble => {
+    let imagenes = [];
+
+    // Si 'imagenes' es un array
+    if (Array.isArray(inmueble.imagenes)) {
+      imagenes = inmueble.imagenes;
+    }
+
+    // Si 'imagenes' es string tipo JSON
+    if (typeof inmueble.imagenes === "string") {
+      try {
+        const imagenesArray = JSON.parse(inmueble.imagenes);
+        if (Array.isArray(imagenesArray)) {
+          imagenes = imagenesArray;
+        }
+      } catch (e) {}
+    }
+
+    if (imagenes.length === 0 && inmueble.imagen) {
+      imagenes.push(inmueble.imagen);
+    }
+
+    const galeria = imagenes.map(url => `<img src="${url}" alt="Imagen" class="imagen-inmueble galeria-item" data-img="${url}" />`).join('');
+
+    const div = document.createElement('div');
+    div.className = 'inmueble-card';
+    div.innerHTML = `
+      <div class="galeria-imagenes">${galeria}</div>
+       <h3>${inmueble.titulo}</h3>
+      <p><strong>Descripción:</strong> ${inmueble.descripcion}</p>
+      <p><strong>Precio:</strong> $${inmueble.precio}</p>
+      <p><strong>Tipo:</strong> ${inmueble.tipo}</p>
+      <p><strong>Operación:</strong> ${inmueble.operacion || 'N/D'}</p>
+      <p><strong>Estado:</strong> ${inmueble.estado || 'N/D'}</p>
+      <p><strong>Municipio:</strong> ${inmueble.municipio || 'N/D'}</p>
+      <p><strong>Dirección:</strong> ${inmueble.direccion || 'N/D'}</p>
+      <p><strong>Superficie:</strong> ${inmueble.superficie || 'N/D'} m²</p>
+      <p><strong>Habitaciones:</strong> ${inmueble.habitaciones || 'N/D'}</p>
+      <p><strong>Baños:</strong> ${inmueble.banos || 'N/D'}</p>
+      <p><strong>Estacionamiento:</strong> ${inmueble.estacionamiento || 'N/D'}</p>
+      <p><strong>Amenidades:</strong> ${inmueble.amenidades || 'N/D'}</p>
+      <p><strong>Amueblado:</strong> ${inmueble.amueblado ? 'Sí' : 'No'}</p>
+      <p><strong>Estado de la propiedad:</strong> ${inmueble.estado_propiedad || 'N/D'}</p>
+      <p><strong>Servicios:</strong> ${inmueble.servicios || 'N/D'}</p>
+      <p><strong>Condiciones de pago:</strong> ${inmueble.condiciones_pago || 'N/D'}</p>
+      <p><strong>Reglamentos:</strong> ${inmueble.reglamentos || 'N/D'}</p>
+      <p><strong>Contacto:</strong> <a href="tel:${inmueble.contacto}" class="telefono-link">${inmueble.contacto}</a></p>
+      <p><strong>Ubicación maps:</strong> 
+  ${inmueble.mapa_url ? `<a href="${inmueble.mapa_url}" target="_blank">Ver mapa</a>` : 'N/D'}
+</p>
+
+      
+    `;
+    contenedor.appendChild(div);
+  });
+
+  // Agregar eventos para el visor modal
+  document.querySelectorAll('.galeria-item').forEach(img => {
+    img.addEventListener('click', () => {
+      mostrarVisor(img.dataset.img);
+    });
+  });
+}
+
+
+    function aplicarFiltros(lista) {
+      const texto = document.getElementById('buscador').value.toLowerCase();
+      const tipo = document.getElementById('filtro-tipo').value;
+      const precio = document.getElementById('filtro-precio').value;
+
+      return lista.filter(inmueble => {
+        const coincideTitulo = inmueble.titulo.toLowerCase().includes(texto);
+        const coincideTipo = tipo ? inmueble.tipo === tipo : true;
+
+        let coincidePrecio = true;
+        if (precio === "0-1000000") coincidePrecio = inmueble.precio <= 1000000;
+        else if (precio === "1000000-3000000") coincidePrecio = inmueble.precio >= 1000000 && inmueble.precio <= 3000000;
+        else if (precio === "3000000") coincidePrecio = inmueble.precio > 3000000;
+
+        return coincideTitulo && coincideTipo && coincidePrecio;
+      });
+    }
+
+    let todosLosinmuebles = [];
+
+    async function iniciar() {
+      const { data, error } = await supabase
+        .from('inmuebles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error) {
+        todosLosinmuebles = data;
+        renderinmuebles(todosLosinmuebles);
+      } else {
+        document.getElementById('inmuebles-container').innerHTML = '<p>Error al cargar inmuebles.</p>';
+      }
+    }
+
+    document.getElementById('buscador').addEventListener('input', () => {
+      renderinmuebles(aplicarFiltros(todosLosinmuebles));
+    });
+
+    document.getElementById('filtro-tipo').addEventListener('change', () => {
+      renderinmuebles(aplicarFiltros(todosLosinmuebles));
+    });
+
+    document.getElementById('filtro-precio').addEventListener('change', () => {
+      renderinmuebles(aplicarFiltros(todosLosinmuebles));
+    });
+
+    document.addEventListener('DOMContentLoaded', iniciar);
+  </script>
+
+<!-- Visor de imágenes -->
+<div id="visor-modal" class="visor-modal" style="display: none;">
+  <span id="cerrar-visor" class="cerrar-visor">&times;</span>
+  <!-- Flechas eliminadas temporalmente 
+  <button id="anterior-img" class="visor-flecha">&#10094;</button>-->
+  <img id="visor-img" src="" alt="Imagen ampliada" />
+  <!-- Flechas eliminadas temporalmente
+  <button id="siguiente-img" class="visor-flecha">&#10095;</button>
+</div>-->
+
+<script>
+  function mostrarVisor(url) {
+    document.getElementById('visor-img').src = url;
+    document.getElementById('visor-modal').style.display = 'flex';
+  }
+
+  document.getElementById('cerrar-visor').addEventListener('click', () => {
+    document.getElementById('visor-modal').style.display = 'none';
+  });
+
+  document.getElementById('visor-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'visor-modal') {
+      document.getElementById('visor-modal').style.display = 'none';
+    }
+  });
+</script>
+
+
+</body>
+</html>

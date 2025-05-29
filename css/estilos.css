@@ -1,0 +1,41 @@
+.inmueble-item {
+  border: 2px solid #ddd;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.inmueble-item strong {
+  font-size: 18px;
+  color: #333;
+}
+
+.inmueble-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.edit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #E74C3C;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
+}

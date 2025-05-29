@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Inmueble</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <style>
+    .detalle-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .galeria-detalle img {
+      width: 100%;
+      max-width: 300px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .boton-copiar {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .boton-copiar:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <main class="detalle-container">
+    <div id="inmueble-detalle" class="tarjeta-detalle"></div>
+    <button class="boton-copiar" onclick="copiarEnlace()">Copiar enlace</button>
+  </main>
+
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/inmueble.js"></script>
+</body>
+</html>
